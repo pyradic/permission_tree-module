@@ -1,0 +1,16 @@
+{
+    "extends": "../../../../webpack.tsconfig.json",
+    "compileOnSave": false,
+    "compilerOptions": {
+        "baseUrl": ".",
+        "typeRoots": [
+            "../../../../node_modules/@types"
+        ],
+        "paths": {
+            "@pyro/platform": ["../../../../packages/pyro/platform/lib"],
+            "@pyro/admin-theme": ["../admin-theme/lib"]
+        }
+    },
+    "include": ["lib"],
+    "exclude": [ "node_modules","../../../../packages/pyro/platform/lib"]
+}

@@ -1,0 +1,29 @@
+{{ asset_add("scripts.js", "streams::js/form/form.js") }}
+{{ asset_add("scripts.js", "streams::js/form/keyboard.js") }}
+{{ asset_add("scripts.js", "streams::js/form/translations.js") }}
+{{ asset_add("scripts.js","pyro.module.permission_tree::js/addon.js", ["webpack:permission-tree:scripts"]) }}
+{# @ var \Anomaly\Streams\Platform\Ui\Form\Form form #}
+
+{% if not form.options.locked %}
+    {{ asset_add("scripts.js", "streams::js/form/lock.js") }}
+{% endif %}
+
+{% block content %}
+    <div class="container-fluid">
+        {{ form.open({
+            'class': 'form ' ~ form.options.class,
+            'id': 'permission-tree-form'
+        })|raw }}
+        {% include "streams::form/partials/controls" with {"position": "top"} %}
+        {% include form.options.get('heading', "streams::form/partials/heading") %}
+
+        <div style="display: none">
+            {% include "streams::form/partials/layout" %}
+        </div>
+        <py-permission-tree connect-form="#permission-tree-form"></py-permission-tree>
+
+        {% include "streams::form/partials/controls" %}
+
+        {{ form.close()|raw }}
+    </div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{
+    "name": "@pyro/permission-tree",
+    "version": "1.0.0",
+    "scripts": {},
+    "main": "lib/index.ts",
+    "pyro": {
+        "srcPath": "lib",
+        "entry": {
+            "development": "index.ts",
+            "production": "index.ts"
+        }
+    },
+    "dependencies": {
+        "@pyro/admin-theme": "^1.0.0",
+        "@pyro/platform": "^1.0.0",
+        "qs": "^6.9.0"
+    },
+    "devDependencies": {}
+}
