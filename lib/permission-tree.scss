@@ -44,12 +44,14 @@ $form-prefix: pyro-permission-tree__permission-form;
         .text-stream {
             color: #0098ca;
             font-size: 11px;
-            min-width: 100px;
+            width: 100px;
             background: #bfe0ff;
             padding: 2px 10px 2px 5px;
             display: inline-block;
             text-align: right;
             font-weight: initial;
+            overflow: hidden;
+            direction: rtl;
         }
 
         .text-permission {
