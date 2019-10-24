@@ -111,7 +111,7 @@
             this.permissions  = {}
             this.checkedKeys = ''
             this.dataViewType     = this.$py.cookies.get('permission_tree.permissions.dataViewType') || 'compact';
-            this.defaultExpandAll = this.$py.cookies.get('permission_tree.permissions.defaultExpandAll', false) || false;
+            this.defaultExpandAll = this.$py.cookies.has('permission_tree.permissions.defaultExpandAll') || false;
             this.setDataFromPermissions(app().get<AddonPermissions>('permission_tree.permissions'));
 
         }
@@ -278,7 +278,7 @@
         }
 
         collapseAll() {
-            this.$py.cookies.set('permission_tree.permissions.defaultExpandAll', false)
+            this.$py.cookies.unset('permission_tree.permissions.defaultExpandAll')
             this.tree.store._getAllNodes().forEach(node => node.expanded = false)
         }
 
