@@ -20,7 +20,11 @@
         <div style="display: none">
             {% include "streams::form/partials/layout" %}
         </div>
-        <py-permission-tree connect-form="#permission-tree-form"></py-permission-tree>
+        <py-permission-tree
+                connect-form="#permission-tree-form"
+                :permissions="permission_tree.permissions"
+                :disabled="permission_tree.disabled"
+        ></py-permission-tree>
 
         {% include "streams::form/partials/controls" %}
 

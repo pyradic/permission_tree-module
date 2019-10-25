@@ -10,6 +10,7 @@ export class PermissionTreeServiceProvider extends ServiceProvider {
         this.app.hooks.start.tap('PermissionTreeServiceProvider', Vue => {
             log('hooks.start', { Vue });
             this.app.instance('permission_tree.permissions', PLATFORM_DATA.permission_tree.permissions)
+            this.app.instance('permission_tree.disabled', PLATFORM_DATA.permission_tree.disabled)
             Vue.use(PermissionTreeVuePlugin)
         });
         console.log('admin',admin)

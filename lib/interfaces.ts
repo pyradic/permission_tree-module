@@ -3,6 +3,7 @@ export namespace AddonPermission {
         export interface Permission {
             label?: string
             enabled?: boolean
+            disabled?: boolean
             key?: string
             permission?: string
         }

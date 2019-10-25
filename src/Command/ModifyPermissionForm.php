@@ -13,6 +13,9 @@ class ModifyPermissionForm
     /** @var \Anomaly\Streams\Platform\Ui\Form\FormBuilder */
     protected $builder;
 
+    /** @var array|string[] */
+    protected $disabled;
+
     public function __construct($builder)
     {
         $this->builder = $builder;
@@ -29,6 +32,8 @@ class ModifyPermissionForm
     {
         $this->builder->setFormOption('class', 'pyro-permission-tree__permission-form');
         $this->builder->setFormOption('form_view', 'pyro.module.permission_tree::permission-form');
+
+        $this->disabled=data_get($this->builder->getFields(), '0.config.disabled', []);
 
         $data = collect($this->builder->getSections())
             ->filter(function ($section, $key) use ($addons) {
@@ -52,9 +57,9 @@ class ModifyPermissionForm
                     foreach ($field->config('options') as $key => $label) {
                         $label   = trans($label);
                         $enabled = in_array($key, $value, true);
-
                         $permission    = Str::replaceFirst($fieldKey . '.', '', $key);
-                        $permissions[] = compact('label', 'enabled', 'key', 'permission');
+                        $disabled = in_array($permission,$this->disabled,true);
+                        $permissions[] = compact('label', 'enabled', 'key', 'permission', 'disabled');
                     }
 
                     return [ 'permissions' => $permissions, 'label' => $field->getLabel(), 'field' => $fieldSlug, 'key' => $fieldKey ];
@@ -64,12 +69,15 @@ class ModifyPermissionForm
             ->values()
             ->toArray();
 
+        $disabled=data_get($this->builder->getFields(), '0.config.disabled', []);
 
         app()->platform
             ->addPublicScript('assets/js/pyro__permission_tree.js')
             ->addPublicStyle('assets/css/pyro__permission_tree.css')
             ->addProvider('pyro.pyro__permission_tree.PermissionTreeServiceProvider')
-            ->set('permission_tree.permissions', $data);
+            ->set('permission_tree.permissions', $data)
+            ->set('permission_tree.disabled', $disabled)
+        ;
 
 //        $assets->add('scripts.js', 'pyro.module.permission_tree::js/addon.js', [ 'webpack:permission-tree:scripts' ]);
 //        app()->platform->addProvider('pyro.pyro__permission_tree.PermissionTreeServiceProvider');

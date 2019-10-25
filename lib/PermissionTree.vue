@@ -70,10 +70,11 @@
         }
     })
     export default class PermissionTree extends Component {
-        name = 'permission-tree'
+        name                                 = 'permission-tree'
         $refs: { tree: Tree, input: HTMLInputElement }
         @prop.string() connectForm: string
-
+        @prop.array() permissions: any;
+        @prop.array() disabled: string[];
         dataCompact: any                     = [];
         dataExpanded: any                    = []
         dataViewType: PermissionTreeViewType = app().cookies.get('permission_tree.permissions.dataViewType') || 'compact'
@@ -84,8 +85,9 @@
             disabled: 'disabled'
         }
         defaultEnabledKeys                   = []
-        permissions: Record<string, AddonPermission.Stream.Permission>
+        // permissions: Record<string, AddonPermission.Stream.Permission>
         originalCheckboxes: OriginalCheckboxes
+        perms: any;
 
         get tree(): Tree {return this.$refs.tree}
 
@@ -107,16 +109,17 @@
         get hasForm() { return this.form !== undefined }
 
         created() {
-            window[ '$tree' ] = this
-            this.permissions  = {}
-            this.checkedKeys = ''
+            window[ '$tree' ]     = this
+            this.perms = {}
+            this.checkedKeys      = ''
             this.dataViewType     = this.$py.cookies.get('permission_tree.permissions.dataViewType') || 'compact';
             this.defaultExpandAll = this.$py.cookies.has('permission_tree.permissions.defaultExpandAll') || false;
-            this.setDataFromPermissions(app().get<AddonPermissions>('permission_tree.permissions'));
+
 
         }
 
-        beforeMount(){
+        beforeMount() {
+            this.setDataFromPermissions(this.permissions);
         }
 
         mounted() {
@@ -196,26 +199,29 @@
                 .map(el => ({ name: el.name, value: el.value, checked: el.checked, el }))
         }
 
-        checkedKeys:string
+        checkedKeys: string
 
         handleCheck(data: TreeData, other) {
             log('handleCheck', { data, other })
             let checkedKeys = other.checkedKeys.join('|');
-            if(checkedKeys !== this.checkedKeys) {
+            if ( checkedKeys !== this.checkedKeys ) {
                 this.tree.store._getAllNodes().forEach(node => {
                     if ( node.data.type === 'permission' ) {
-                        this.permissions[ node.data.key ].enabled = node.checked
+                        this.perms[ node.data.key ].enabled = node.checked
                         this.updateOriginalCheckboxByNode(node.data, node.checked)
                     }
                 })
-                this.checkedKeys=checkedKeys;
-                this.defaultEnabledKeys              = this.getEnabledPermissions().map((p: any) => p.key)
+                this.checkedKeys        = checkedKeys;
+                this.defaultEnabledKeys = this.getEnabledPermissions().map((p: any) => p.key)
                 this.save();
             }
         }
 
         handleNodeClick(data: TreeData, node: TreeNode<any, TreeData>, component: Tree) {
             log('handleNodeClick', { data, node, component })
+            if ( data.disabled ) {
+                return;
+            }
             if ( data.type === 'permission' ) {
                 let checked = !node.checked
                 this.tree.setChecked(data as any, checked, true)
@@ -231,7 +237,7 @@
             return;
             if ( data.type === 'permission' ) {
                 log('handleCheckChange', { data, checked, me: this })
-                this.permissions[ data.key ].enabled = checked
+                this.perms[ data.key ].enabled = checked
                 this.defaultEnabledKeys              = this.getEnabledPermissions().map((p: any) => p.key)
                 this.updateOriginalCheckboxByNode(data, checked);
                 this.save();
@@ -253,7 +259,7 @@
         }
 
         getEnabledPermissions() {
-            return Object.values(this.permissions).filter((p: any) => p.enabled)
+            return Object.values(this.perms).filter((p: any) => p.enabled)
         }
 
         renderNodeContent(h: CreateElement, { node, data, store }: { node: TreeNode<any, TreeData>, data: TreeData, store: any }) {
@@ -312,12 +318,13 @@
                         let { key, label, field }          = stream
                         let parentStream                   = { key, label, field }
                         type                               = 'permission'
-                        this.permissions[ permission.key ] = permission
+                        let disabled                       = this.disabled.includes(permission.key)
+                        this.perms[ permission.key ] = permission
                         if ( permission.enabled ) {
                             this.defaultEnabledKeys.push(permission.key)
                         }
-                        dataStreamExpanded.children.push({ key: permission.key, label: permission.label, type, stream: parentStream })
-                        dataAddonCompact.children.push({ key: permission.key, label: permission.label, type, stream: parentStream })
+                        dataStreamExpanded.children.push({ key: permission.key, label: permission.label, type, stream: parentStream, disabled })
+                        dataAddonCompact.children.push({ key: permission.key, label: permission.label, type, stream: parentStream, disabled })
                     })
                 })
 
