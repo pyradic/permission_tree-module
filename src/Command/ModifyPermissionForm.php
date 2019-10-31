@@ -33,7 +33,7 @@ class ModifyPermissionForm
         $this->builder->setFormOption('class', 'pyro-permission-tree__permission-form');
         $this->builder->setFormOption('form_view', 'pyro.module.permission_tree::permission-form');
 
-        $this->disabled=data_get($this->builder->getFields(), '0.config.disabled', []);
+        $this->disabled = data_get($this->builder->getFields(), '0.config.disabled', []);
 
         $data = collect($this->builder->getSections())
             ->filter(function ($section, $key) use ($addons) {
@@ -47,7 +47,7 @@ class ModifyPermissionForm
                 return true;
             })
             ->map(function ($section, $key) {
-                $addon[ 'key' ] = $key;
+                $addon[ 'key' ]     = $key;
                 $addon[ 'label' ]   = trans($section[ 'title' ]);
                 $addon[ 'streams' ] = collect($section[ 'fields' ])->map(function ($fieldSlug) {
                     $field       = $this->builder->getFormField($fieldSlug);
@@ -55,10 +55,10 @@ class ModifyPermissionForm
                     $fieldKey    = str_replace('_', '.', $fieldSlug);
                     $permissions = [];
                     foreach ($field->config('options') as $key => $label) {
-                        $label   = trans($label);
-                        $enabled = in_array($key, $value, true);
+                        $label         = trans($label);
+                        $enabled       = in_array($key, $value, true);
                         $permission    = Str::replaceFirst($fieldKey . '.', '', $key);
-                        $disabled = in_array($permission,$this->disabled,true);
+                        $disabled      = in_array($permission, $this->disabled, true);
                         $permissions[] = compact('label', 'enabled', 'key', 'permission', 'disabled');
                     }
 
@@ -69,15 +69,22 @@ class ModifyPermissionForm
             ->values()
             ->toArray();
 
-        $disabled=data_get($this->builder->getFields(), '0.config.disabled', []);
+        $disabled = data_get($this->builder->getFields(), '0.config.disabled', []);
 
         app()->platform
-            ->addPublicScript('assets/js/pyro__permission_tree.js')
-            ->addPublicStyle('assets/css/pyro__permission_tree.css')
-            ->addProvider('pyro.pyro__permission_tree.PermissionTreeServiceProvider')
+//            ->addAddon($this->addon)
+//            ->addScript('@pyro/permission_tree-module')
+//            ->addScript('@pyro/menus-module')
+//            ->addScript('@pyro/menus-module::entry')
+//            ->addScript('{module}')
+//            ->addPublicScript('assets/js/pyro__permission_tree_module.js')
+//            ->addPublicStyle('assets/css/pyro__permission_tree_module.css')
+//            ->addProvider('pyro.pyro__permission_tree_module.PermissionTreeServiceProvider')
+            ->addScript('@pyro/permission_tree-module')
+            ->addStyle('@pyro/permission_tree-module')
+            ->addProvider('@pyro/permission_tree-module::PermissionTreeServiceProvider')
             ->set('permission_tree.permissions', $data)
-            ->set('permission_tree.disabled', $disabled)
-        ;
+            ->set('permission_tree.disabled', $disabled);
 
 //        $assets->add('scripts.js', 'pyro.module.permission_tree::js/addon.js', [ 'webpack:permission-tree:scripts' ]);
 //        app()->platform->addProvider('pyro.pyro__permission_tree.PermissionTreeServiceProvider');

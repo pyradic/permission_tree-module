@@ -1,14 +1,13 @@
 {
-    "name": "@pyro/permission-tree",
+    "name": "@pyro/permission_tree-module",
     "version": "1.0.0",
     "scripts": {},
     "main": "lib/index.ts",
     "pyro": {
         "srcPath": "lib",
-        "entry": {
-            "development": "index.ts",
-            "production": "index.ts"
-        }
+        "entrypoints": [
+            {"path": "index.ts"}
+        ]
     },
     "dependencies": {
         "@pyro/admin-theme": "^1.0.0",
