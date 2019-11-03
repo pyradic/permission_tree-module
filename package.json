@@ -3,10 +3,12 @@
     "version": "1.0.0",
     "scripts": {},
     "main": "lib/index.ts",
+    "typings": "lib/index.ts",
+    "types": "lib/index.ts",
     "pyro": {
         "srcPath": "lib",
         "entrypoints": [
-            {"path": "index.ts"}
+            {"path": "index.ts", "provider": "PermissionTreeModuleServiceProvider"}
         ]
     },
     "dependencies": {

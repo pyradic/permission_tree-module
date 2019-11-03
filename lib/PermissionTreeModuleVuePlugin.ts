@@ -5,9 +5,7 @@ import debug from 'debug';
 
 const log = debug('permission_tree.PermissionTreeVuePlugin');
 
-export { PermissionTreeVuePlugin }
-
-export default class PermissionTreeVuePlugin {
+export class PermissionTreeModuleVuePlugin {
     static __installed = false
 
     static install(_Vue: typeof Vue, opts: any = {}) {

@@ -1,8 +1,8 @@
 import './permission-tree.scss'
 import PermissionTree from './PermissionTree.vue';
-import { PermissionTreeServiceProvider } from './PermissionTreeServiceProvider';
-import PermissionTreeVuePlugin from './PermissionTreeVuePlugin';
+import { PermissionTreeModuleServiceProvider } from './PermissionTreeModuleServiceProvider';
+import {PermissionTreeModuleVuePlugin} from './PermissionTreeModuleVuePlugin';
 
 export * from './interfaces'
 
-export { PermissionTree, PermissionTreeVuePlugin, PermissionTreeServiceProvider }
+export { PermissionTree, PermissionTreeModuleVuePlugin, PermissionTreeModuleServiceProvider }

@@ -72,24 +72,9 @@ class ModifyPermissionForm
         $disabled = data_get($this->builder->getFields(), '0.config.disabled', []);
 
         app()->platform
-//            ->addAddon($this->addon)
-//            ->addScript('@pyro/permission_tree-module')
-//            ->addScript('@pyro/menus-module')
-//            ->addScript('@pyro/menus-module::entry')
-//            ->addScript('{module}')
-//            ->addPublicScript('assets/js/pyro__permission_tree_module.js')
-//            ->addPublicStyle('assets/css/pyro__permission_tree_module.css')
-//            ->addProvider('pyro.pyro__permission_tree_module.PermissionTreeServiceProvider')
-            ->addScript('@pyro/permission_tree-module')
-            ->addStyle('@pyro/permission_tree-module')
-            ->addProvider('@pyro/permission_tree-module::PermissionTreeServiceProvider')
+            ->addWebpackEntry('@pyro/permission_tree-module')
             ->set('permission_tree.permissions', $data)
             ->set('permission_tree.disabled', $disabled);
-
-//        $assets->add('scripts.js', 'pyro.module.permission_tree::js/addon.js', [ 'webpack:permission-tree:scripts' ]);
-//        app()->platform->addProvider('pyro.pyro__permission_tree.PermissionTreeServiceProvider');
-//        app()->platform->getData()->set('ex2.permissions', $data);
-//        $this->builder->addFormData('data', $data);
     }
 
 }
