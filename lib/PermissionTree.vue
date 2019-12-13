@@ -77,7 +77,7 @@
         @prop.array() disabled: string[];
         dataCompact: any                     = [];
         dataExpanded: any                    = []
-        dataViewType: PermissionTreeViewType = app().cookies.get('permission_tree.permissions.dataViewType') || 'compact'
+        dataViewType: PermissionTreeViewType = app.cookies.get('permission_tree.permissions.dataViewType') || 'compact'
         defaultExpandAll: boolean            = true;
         defaultProps                         = {
             children: 'children',
