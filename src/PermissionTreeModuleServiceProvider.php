@@ -11,16 +11,20 @@ class PermissionTreeModuleServiceProvider extends AddonServiceProvider
 {
 
 
-    public function boot(RolePermissionFormBuilder $roleBuilder, UserPermissionFormBuilder $userBuilder)
+    public function boot()
     {
-        $this->modifyForm($roleBuilder);
-        $this->modifyForm($userBuilder);
-    }
-
-    protected function modifyForm(FormBuilder $builder)
-    {
-        $builder->listen('built', function ($builder) {
-            $this->dispatchNow(new ModifyPermissionForm($builder));
+        $this->app->extend(RolePermissionFormBuilder::class, function(RolePermissionFormBuilder $builder){
+            $builder->listen('built', function ($builder) {
+                dispatch_now(new ModifyPermissionForm($builder));
+            });
+            return $builder;
+        });
+        $this->app->extend(UserPermissionFormBuilder::class, function(UserPermissionFormBuilder $builder){
+            $builder->listen('built', function ($builder) {
+                dispatch_now(new ModifyPermissionForm($builder));
+            });
+            return $builder;
         });
     }
+
 }
