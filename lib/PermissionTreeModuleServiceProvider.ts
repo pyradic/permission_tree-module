@@ -1,4 +1,4 @@
-import { ServiceProvider } from '@pyro/platform';
+import { ServiceProvider } from '@crvs/platform';
 import * as admin from '@pyro/admin-theme'
 import { debug } from 'debug';
 import {PermissionTreeModuleVuePlugin} from './PermissionTreeModuleVuePlugin';

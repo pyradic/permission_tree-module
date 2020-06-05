@@ -35,7 +35,7 @@
 <script lang="ts">
 
     import { CreateElement } from 'vue';
-    import { app, Component, component, prop } from '@pyro/platform';
+    import { app, Component, component, prop } from '@crvs/platform';
     import { Button, Checkbox, Col, Icon, Input, Notification, Row, Tree } from 'element-ui';
     import { AddonPermission, AddonPermissions } from './interfaces';
     import { TreeData, TreeNode } from 'element-ui/types/tree';

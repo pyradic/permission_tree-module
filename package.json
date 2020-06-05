@@ -13,7 +13,7 @@
     },
     "dependencies": {
         "@pyro/admin-theme": "^1.0.0",
-        "@pyro/platform": "^1.0.0",
+        "@crvs/platform": "^1.0.0",
         "qs": "^6.9.0"
     },
     "devDependencies": {}

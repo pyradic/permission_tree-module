@@ -7,7 +7,7 @@
             "../../../../node_modules/@types"
         ],
         "paths": {
-            "@pyro/platform": ["../../../../packages/pyro/platform/lib"],
+            "@crvs/platform": ["../../../../packages/pyro/platform/lib"],
             "@pyro/admin-theme": ["../admin-theme/lib"]
         }
     },

@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import { Application, prefixAndRegisterComponents } from '@pyro/platform';
+import { Application, prefixAndRegisterComponents } from '@crvs/platform';
 import PermissionTree from './PermissionTree.vue';
 import debug from 'debug';
 
