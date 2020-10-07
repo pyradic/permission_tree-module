@@ -1,7 +1,8 @@
-import { ServiceProvider } from '@crvs/platform';
-import * as admin from '@pyro/admin-theme'
-import { debug } from 'debug';
-import {PermissionTreeModuleVuePlugin} from './PermissionTreeModuleVuePlugin';
+import { ServiceProvider }               from '@crvs/platform';
+import * as admin                        from '@crvs/admin-theme';
+import { debug }                         from 'debug';
+import { PermissionTreeModuleVuePlugin } from './PermissionTreeModuleVuePlugin';
+
 const log = debug('permission_tree.PermissionTreeServiceProvider');
 
 
@@ -11,9 +12,9 @@ export class PermissionTreeModuleServiceProvider extends ServiceProvider {
             log('hooks.start', { Vue });
             // this.app.instance('permission_tree.permissions', PLATFORM_DATA.permission_tree.permissions)
             // this.app.instance('permission_tree.disabled', PLATFORM_DATA.permission_tree.disabled)
-            Vue.use(PermissionTreeModuleVuePlugin)
+            Vue.use(PermissionTreeModuleVuePlugin);
         });
-        console.log('admin',admin)
+        console.log('admin', admin);
     }
 }
 
