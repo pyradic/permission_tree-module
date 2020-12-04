@@ -8,8 +8,12 @@
     "pyro": {
         "srcPath": "lib",
         "entrypoints": [
-            {"path": "index.ts","provider": "PermissionTreeModuleServiceProvider"}
-        ]
+            {
+                "path": "index.ts",
+                "provider": "PermissionTreeModuleServiceProvider"
+            }
+        ],
+        "hmr": false
     },
     "dependencies": {
         "@crvs/admin-theme": "^1.0.0",
